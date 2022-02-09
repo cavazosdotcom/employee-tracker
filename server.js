@@ -29,8 +29,8 @@ async function mainMenu() {
             return viewAllEmployeees();
         case 'Add Department':
             return addDepartment();
-        // case 'Add Role':
-        //     return addRole();
+        case 'Add Role':
+            return addRole();
         
         };
 };
@@ -75,34 +75,46 @@ async function addDepartment() {
     mainMenu();
 };
 
+// async function deleteDepartment(deletedDepartment) {
+//     const department = await deletedDepartment
 
-// async function addRole() {
-//     const role = await inquirer.prompt([
-//         {
-//             name: 'title',
-//             type: 'input',
-//             message: 'What is the title of the role?'
-//         },
-//         {
-//             name: 'salary',
-//             type: 'input',
-//             message: 'What is the salary of the role?'
-//         },
-//         {
+//     db.deleteDepartment(department)
+//     console.log(`${department} deleted!`)
 
-//         },
-//         // {
-//         //     name: 'name',
-//         //     type: 'input',
-//         //     message: 'What is the department of the role?'
-//         // }
-//     ])
-//     // console.log(role);
-//     db.addRole(role);
-//     console.log('\n');
-//     console.log(`${role.title} added!`)
-//     console.log('\n');
-//     mainMenu();
-// };
+// }
+
+
+async function addRole() {
+    const role = await inquirer.prompt([
+        {
+            name: 'title',
+            type: 'input',
+            message: 'What is the title of the role?'
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'What is the salary of the role?'
+        },
+        {
+            name: 'department_id',
+            type: 'input',
+            message: 'What is the department id of the role?'
+        }
+    ])
+    // console.log(role);
+    db.addRole(role.title, role.salary, role.department_id);
+    console.log('\n');
+    console.log(`${role.title} added!`)
+    console.log(role)
+    console.table(role)
+    console.log('\n');
+    mainMenu();
+};
+
+async function endProgram() {
+    
+}
+
 
 mainMenu();

@@ -56,15 +56,15 @@ class DB{
         )
     }
 
-    
-    // addRole(role){
-    //     return this.connection.promise().query(
-    //         `INSERT INTO
-    //             role
-    //         SET
-    //             ?`, role
-    //     )
-    // }
+    // TODO: Make work, fix syntax
+    addRole(title, salary, department_id){
+        return this.connection.promise().query(
+            `INSERT INTO
+                role (title, salary, department_id)
+            VALUES
+                (?, ?, ?);`, [title, salary, department_id]
+        )
+    }
 
 };
 
