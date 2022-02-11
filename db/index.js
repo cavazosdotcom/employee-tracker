@@ -30,7 +30,7 @@ class DB{
         )
     }
 
-    // TODO: CHANGE MANAGER ID TO NAME
+
     viewAllEmployees() {
         return this.connection.promise().query(
             `SELECT
@@ -69,17 +69,18 @@ class DB{
         )
     }
 
+
     addEmployee(employee){
         return this.connection.promise().query(
             `INSERT INTO
                 employee
-            VALUES
+            SET
                 ?;`, employee
         )
     }
 
 
-    updateRole( roleId, employeeId ){
+    updateRole( employeeId, roleId ){
         return this.connection.promise().query(
             `UPDATE
                 employee
@@ -88,6 +89,18 @@ class DB{
             WHERE
                 id = ?`, [roleId, employeeId]
             
+        )
+    }
+
+    
+    managerSelect(){
+        return this.connection.promise().query(
+            `SELECT
+                *
+            FROM
+                employee
+            WHERE
+                manager_id IS NULL`
         )
     }
 
