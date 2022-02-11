@@ -92,7 +92,7 @@ class DB{
         )
     }
 
-    
+
     managerSelect(){
         return this.connection.promise().query(
             `SELECT
@@ -103,7 +103,6 @@ class DB{
                 manager_id IS NULL`
         )
     }
-
 };
 
 

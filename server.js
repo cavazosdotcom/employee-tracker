@@ -18,7 +18,8 @@ async function mainMenu() {
                 'Add Department',
                 'Add Role',
                 'Add Employee',
-                'Update Role'
+                'Update Role',
+                'Quit'
             ]
          }     
     ]) 
@@ -41,6 +42,8 @@ async function mainMenu() {
             return addEmployee();
         case 'Update Role':
             return updateRole()
+        case 'Quit':
+            return quitApp()
         };
 };
 
@@ -248,6 +251,28 @@ async function updateRole() {
 }
 
 
+
+async function quitApp(){
+
+    const wantToQuit = await inquirer.prompt([
+        {
+            name: 'quit',
+            type: 'confirm',
+            message: 'Would you like to quit?'
+        }
+    ])
+
+    const {quit} = wantToQuit
+    
+    switch(quit){
+        case true:
+            console.log('\n')
+            process.exit();
+        case false:
+            console.log('\n')
+            mainMenu();
+    }
+}
 
 
 mainMenu();
