@@ -39,13 +39,16 @@ class DB{
                 employee.last_name,
                 role.title,
                 role.salary,
-                employee.manager_id
+                concat(manager.first_name, ' ', manager.last_name) AS manager
             FROM
                 employee
-            JOIN 
-                role ON employee.role_id = role.id`
+            LEFT JOIN
+                role ON employee.role_id = role.id
+            LEFT JOIN
+                employee manager ON manager.id = employee.manager_id`
         )
     }
+
 
     addDepartment(department){
         return this.connection.promise().query(
@@ -56,17 +59,41 @@ class DB{
         )
     }
 
-    // TODO: Make work, fix syntax
-    addRole(title, salary, department_id){
+    
+    addRole(role){
         return this.connection.promise().query(
             `INSERT INTO
-                role (title, salary, department_id)
+                role
+            SET
+                ?;`, role
+        )
+    }
+
+    addEmployee(employee){
+        return this.connection.promise().query(
+            `INSERT INTO
+                employee
             VALUES
-                (?, ?, ?);`, [title, salary, department_id]
+                ?;`, employee
+        )
+    }
+
+
+    updateRole( roleId, employeeId ){
+        return this.connection.promise().query(
+            `UPDATE
+                employee
+            SET
+                role_id = ?
+            WHERE
+                id = ?`, [roleId, employeeId]
+            
         )
     }
 
 };
+
+
 
 
 module.exports = new DB(connection)
