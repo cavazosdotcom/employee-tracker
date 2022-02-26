@@ -3,7 +3,7 @@
   
   # Description
   
-  [Video: How to install and run application]()
+  [Video: How to install and run application](https://drive.google.com/file/d/160vbN3v-0xf8mEAWqyRxioW4vpTwoB41/view)
 
   The employee tracker application is exactly that. A database where you can track employees. Using mysql and inquirer, the user can add and view departments, roles and employees as well as update roles on employees. After starting the app from the CLI, the user will be put into a main menu inside their CLI to perform all of these actions with the database and have the option to leave at anytime.
 
