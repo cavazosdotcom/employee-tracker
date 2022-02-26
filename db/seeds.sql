@@ -1,3 +1,4 @@
+-- using the employee database, inserts the listed properties values into the above table
 use employees_db; 
 INSERT INTO department
     (name)

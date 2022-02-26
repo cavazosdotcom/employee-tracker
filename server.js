@@ -3,9 +3,9 @@ const db = require('./db');
 require('console.table');
 
 
-
+// function to send user to main menu with all of the available actions they can perform
 async function mainMenu() {
-    
+    // deconstructs the selection object to extract the choices value from the selection object
     const {selection} = await inquirer.prompt([
         {
             name: 'selection',
@@ -26,7 +26,7 @@ async function mainMenu() {
 
     console.log('\n');
 
-
+    // switch case to choose the action to perform, takes in the deconstructed selection object value and returns the corresponding function
     switch(selection){
         case 'View All Departments':
             return viewAllDepartments();
@@ -48,22 +48,26 @@ async function mainMenu() {
 };
 
 
-
+// function to view all departments
 async function viewAllDepartments() {
 
+    // creates departments array from db view method
     const [departments] = await db.viewAllDepartments();
 
     console.log('\n');
+    // logs departments table 
     console.table(departments);
     console.log('\n');
 
+    // calls main menu function to send user to the main menu
     mainMenu();
 };
 
 
-
+// function to view all roles
 async function viewAllRoles() {
 
+    // awaits db view method and creates roles array
     const [roles] = await db.viewAllRoles();
 
     console.log('\n');
@@ -87,9 +91,10 @@ async function viewAllEmployeees() {
 }
 
 
-
+// function to add a department
 async function addDepartment() {
 
+    // creates department variable based on the inquirer prompt
     const department = await inquirer.prompt([
         {
             name: 'name',
@@ -98,23 +103,27 @@ async function addDepartment() {
         }
     ])
 
+    // adds department using addDepartment() to db
     db.addDepartment(department);
 
+    // deconstructs department object to get name value
     const {name} = department
 
     console.log('\n');
     console.log(`${name} added!`)
     console.log('\n');
 
+    // returns user to main menu
     mainMenu();
 };
 
 
-
+// function to add role
 async function addRole() {
 
     const [departments] = await db.viewAllDepartments();
 
+    // creates departmentChoices variable, maps the id and name from departments to departmentChoices to be used in inquirer prompt
     const departmentChoices = departments.map(({id, name}) => ({
         name: name,
         value: id
@@ -151,18 +160,21 @@ async function addRole() {
 };
 
 
-
+// funciton to add employee
 async function addEmployee() {
 
+    // creates arrays based on each table by awaiting the db values for each
     const [roles] = await db.viewAllRoles();
     const [employees] = await db.viewAllEmployees();
     const [managers] = await db.managerSelect(employees)
 
+    // creates rolesChoices variable, maps id and title values from roles
     const rolesChoices = roles.map(({id, title}) => ({
         name: title,
         value: id
     }));
 
+    // creates managersChoices from managers for user to choose from
     const managerChoices = managers.map(({id, first_name, last_name}) => ({
         name: `${first_name} ${last_name}`,
         value: id
@@ -206,7 +218,7 @@ async function addEmployee() {
 }
 
 
-
+// function to update an employees role
 async function updateRole() {
 
     const [roles] = await db.viewAllRoles();
@@ -222,6 +234,7 @@ async function updateRole() {
         value: id,
     }))
 
+    // deconstructs the employeeId and roleId
     const { employeeId, roleId } = await inquirer.prompt([
 
         {
@@ -251,7 +264,7 @@ async function updateRole() {
 }
 
 
-
+// function to quit the app
 async function quitApp(){
 
     const wantToQuit = await inquirer.prompt([
@@ -262,14 +275,17 @@ async function quitApp(){
         }
     ])
 
+    // deconstructs the quit object to get the boolean value for switch case
     const {quit} = wantToQuit
     
     switch(quit){
         case true:
             console.log('\n')
+            // ends app
             process.exit();
         case false:
             console.log('\n')
+            // returns to menu
             mainMenu();
     }
 }
